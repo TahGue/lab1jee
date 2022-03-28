@@ -14,6 +14,9 @@ Endpoint Path                                       Request Method
 
 Jason File 
 {
-
+    "firstName":"your first name"
+    "lastName":"your last name"
+    "email":"exemple@mail.com"
+    "phonenumber": 070000000
 
 }
