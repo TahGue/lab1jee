@@ -39,6 +39,10 @@ public class StudentService {
         foundItem.setPhoneNumber(phoneNumber);
         return foundItem;
     }
+    public List<Student> getBylastNameParameters(String lastName) {
+        String query = "SELECT i FROM Student i WHERE i.lastName = :lastName";
+        return entityManager.createQuery(query, Student.class).setParameter("lastName", lastName).getResultList();
+    }
 
 
 

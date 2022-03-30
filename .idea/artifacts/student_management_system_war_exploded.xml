@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="student-management-system:war exploded">
+    <output-path>$PROJECT_DIR$/student-management-system/target/student-management-system</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>student-management-system</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="student-management-system" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:2.0.1.Final" />
+          <element id="library" level="project" name="Maven: com.h2database:h2:2.1.210" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/student-management-system/target/student-management-system/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="student-management-system/web/Web" />
+    </root>
+  </artifact>
+</component>
