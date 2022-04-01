@@ -30,16 +30,16 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
-        Student foundItem = entityManager.find(Student.class, id);
-        entityManager.remove(foundItem);
+        Student foundStudent = entityManager.find(Student.class, id);
+        entityManager.remove(foundStudent);
     }
 
     public Student updatePhoneNumber(Long id, String phoneNumber) {
-        Student foundItem = entityManager.find(Student.class, id);
-        foundItem.setPhoneNumber(phoneNumber);
-        return foundItem;
+        Student foundStudent = entityManager.find(Student.class, id);
+        foundStudent.setPhoneNumber(phoneNumber);
+        return foundStudent;
     }
-    public List<Student> getBylastNameParameters(String lastName) {
+    public List<Student> getByLastName(String lastName) {
         String query = "SELECT i FROM Student i WHERE i.lastName = :lastName";
         return entityManager.createQuery(query, Student.class).setParameter("lastName", lastName).getResultList();
     }

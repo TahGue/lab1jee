@@ -4,7 +4,6 @@ import se.iths.entity.Student;
 import se.iths.service.StudentService;
 
 import javax.inject.Inject;
-import javax.transaction.RollbackException;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -32,13 +31,10 @@ public class StudentRest {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
                     .entity  ( "Insert a name").type(MediaType.TEXT_PLAIN_TYPE).build());
         }
-        catch ( RollbackException error){
-            throw new WebApplicationException(Response.status(Response.Status.CONFLICT)
-                    .entity  ("Email is used" ).type(MediaType.TEXT_PLAIN_TYPE).build());
-        }
+
         catch (Exception error) {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
-                    .entity(error.getMessage() ).type(MediaType.TEXT_PLAIN_TYPE).build());
+                    .entity("Email is used" ).type(MediaType.TEXT_PLAIN_TYPE).build());
 
 
         }
@@ -47,8 +43,13 @@ public class StudentRest {
     @Path("")
     @PUT
     public Response updateStudent(Student student) {
-        StudentService.updateStudent(student);
-        return Response.ok(student).build();
+        try {
+            StudentService.updateStudent(student);
+            return Response.ok(student).build();
+        }catch (Exception error){
+            throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
+                    .entity  (" Something went wrong. Please try again ." ).type(MediaType.TEXT_PLAIN_TYPE).build());
+        }
     }
 
     @Path("{id}")
@@ -93,14 +94,15 @@ public class StudentRest {
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
-        StudentService.deleteStudent(id);
-        Student foundStudent = StudentService.findStudentById(id);
 
-        if (foundStudent == null) {
+
+
+        if (id == null) {
 
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
                     .entity("Student with ID " + id + " was not found in database.").type(MediaType.TEXT_PLAIN_TYPE).build());
         }
+        StudentService.deleteStudent(id);
         return Response.ok().build();
     }
 
@@ -120,10 +122,10 @@ public class StudentRest {
 
 
     }
-    @Path("getbyLN-np")
+    @Path("getbylastname")
     @GET
-    public Response getBylastNameParameters(@QueryParam("lastName") String lastName) {
-        List<Student> result= StudentService.getBylastNameParameters(lastName);
+    public Response getByLastName(@QueryParam("lastName") String lastName) {
+        List<Student> result = StudentService.getByLastName(lastName);
         if (result.size()<=0) {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
                     .entity("Student with lastName " + lastName + " was not found in database.").type(MediaType.TEXT_PLAIN_TYPE).build());
