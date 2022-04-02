@@ -65,17 +65,6 @@ public class StudentRest {
         return Response.ok(foundStudent).build();
     }
 
-    @Path("query")
-    @GET
-    public Response getAllStudent(@QueryParam("student") String student) {
-
-
-
-        String responseString = "Here is the list of  student  " + student;
-        return Response.ok(responseString).type(MediaType.TEXT_PLAIN_TYPE).build();
-
-
-    }
 
 
     @Path("")
